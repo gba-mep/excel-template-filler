@@ -9,10 +9,10 @@ Dual-engine batch template filler for Excel. Auto-detects the best engine (openp
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![openpyxl](https://img.shields.io/badge/openpyxl-3.1+-217346?logo=python&logoColor=white)](https://openpyxl.readthedocs.io)
-[![Stars](https://img.shields.io/github/stars/David-CB666/excel-template-filler?style=social)](https://github.com/David-CB666/excel-template-filler/stargazers)
-[![Forks](https://img.shields.io/github/forks/David-CB666/excel-template-filler?style=social)](https://github.com/David-CB666/excel-template-filler/network/members)
-[![Last Commit](https://img.shields.io/github/last-commit/David-CB666/excel-template-filler)](https://github.com/David-CB666/excel-template-filler/commits)
-[![Part of the MEP Automation Toolkit](https://img.shields.io/badge/Toolkit-MEP%20automation-1565C0?logo=github&logoColor=white)](https://github.com/David-CB666)
+[![Stars](https://img.shields.io/github/stars/gba-mep/excel-template-filler?style=social)](https://github.com/gba-mep/excel-template-filler/stargazers)
+[![Forks](https://img.shields.io/github/forks/gba-mep/excel-template-filler?style=social)](https://github.com/gba-mep/excel-template-filler/network/members)
+[![Last Commit](https://img.shields.io/github/last-commit/gba-mep/excel-template-filler)](https://github.com/gba-mep/excel-template-filler/commits)
+[![Part of the MEP Automation Toolkit](https://img.shields.io/badge/Toolkit-MEP%20automation-1565C0?logo=github&logoColor=white)](https://github.com/gba-mep)
 
 [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation) · [中文介绍](#-中文介绍)
 
@@ -44,7 +44,7 @@ Dual-engine batch template filler for Excel. Auto-detects the best engine (openp
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/David-CB666/excel-template-filler.git
+git clone https://github.com/gba-mep/excel-template-filler.git
 cd excel-template-filler
 pip install -r requirements.txt
 ```
@@ -171,9 +171,9 @@ This tool is one of the **7 skill packs** from the **AI Agent Cultivation Field 
 
 | Tool | Description |
 |------|-------------|
-| [**GanttChart Pro**](https://github.com/David-CB666/gantt-chart-pro) | Professional Gantt charts in Excel — no MS Project |
-| [**VBA Macro Reader**](https://github.com/David-CB666/VBA-Macro-Reader-v2.0.0) | Read, modify & execute VBA macros from .xlsm files |
-| [**Material Submittal Generator**](https://github.com/David-CB666/material-submittal-generator) | One-click batch submittals + auto BQ page merging |
+| [**GanttChart Pro**](https://github.com/gba-mep/gantt-chart-pro) | Professional Gantt charts in Excel — no MS Project |
+| [**VBA Macro Reader**](https://github.com/gba-mep/VBA-Macro-Reader-v2.0.0) | Read, modify & execute VBA macros from .xlsm files |
+| [**Material Submittal Generator**](https://github.com/gba-mep/material-submittal-generator) | One-click batch submittals + auto BQ page merging |
 
 ## 🤝 Contributing
 
@@ -181,7 +181,7 @@ Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md)
 
 ## 📄 License
 
-MIT © [David-CB666](https://github.com/David-CB666)
+MIT © [gba-mep](https://github.com/gba-mep)
 
 ---
 
@@ -189,7 +189,7 @@ MIT © [David-CB666](https://github.com/David-CB666)
 
 ### ⭐ If this tool saved you time, give it a star!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=David-CB666/excel-template-filler&type=Date)](https://star-history.com/#David-CB666/excel-template-filler&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=gba-mep/excel-template-filler&type=Date)](https://star-history.com/#gba-mep/excel-template-filler&Date)
 
 </div>
 
@@ -197,11 +197,11 @@ MIT © [David-CB666](https://github.com/David-CB666)
 
 ## Related repositories
 
-Part of the **[MEP & construction document automation toolkit](https://github.com/David-CB666)** — open-source tools built from real jobsite workflows.
+Part of the **[MEP & construction document automation toolkit](https://github.com/gba-mep)** — open-source tools built from real jobsite workflows.
 
-- **Handbook** — [ai-agent-manual](https://github.com/David-CB666/ai-agent-manual) (8-level AI cultivation for engineers)
-- **Document generation** — [material-approval-pipeline](https://github.com/David-CB666/material-approval-pipeline) · [material-submittal-generator](https://github.com/David-CB666/material-submittal-generator) · [python-docx-photo-grid](https://github.com/David-CB666/python-docx-photo-grid) · [daily-construction-log](https://github.com/David-CB666/daily-construction-log) · [officecli-workflow](https://github.com/David-CB666/officecli-workflow)
-- **Engineering calculation** — [lighting-lux-calculator](https://github.com/David-CB666/lighting-lux-calculator) · [ups-discharge-time-calculator](https://github.com/David-CB666/ups-discharge-time-calculator) · [gantt-chart-pro](https://github.com/David-CB666/gantt-chart-pro) · [electrical-test-report-generator](https://github.com/David-CB666/electrical-test-report-generator)
-- **CAD & drawings** — [electrical-panel-label-plates](https://github.com/David-CB666/electrical-panel-label-plates)
-- **Data & OCR** — [ocr-skill](https://github.com/David-CB666/ocr-skill) · [VBA-Macro-Reader-v2.0.0](https://github.com/David-CB666/VBA-Macro-Reader-v2.0.0)
-- **Compliance & AI ops** — [confined-space-planner](https://github.com/David-CB666/confined-space-planner) · [skill-router](https://github.com/David-CB666/skill-router) · [consulting-services](https://github.com/David-CB666/consulting-services)
+- **Handbook** — [ai-agent-manual](https://github.com/gba-mep/ai-agent-manual) (8-level AI cultivation for engineers)
+- **Document generation** — [material-approval-pipeline](https://github.com/gba-mep/material-approval-pipeline) · [material-submittal-generator](https://github.com/gba-mep/material-submittal-generator) · [python-docx-photo-grid](https://github.com/gba-mep/python-docx-photo-grid) · [daily-construction-log](https://github.com/gba-mep/daily-construction-log) · [officecli-workflow](https://github.com/gba-mep/officecli-workflow)
+- **Engineering calculation** — [lighting-lux-calculator](https://github.com/gba-mep/lighting-lux-calculator) · [ups-discharge-time-calculator](https://github.com/gba-mep/ups-discharge-time-calculator) · [gantt-chart-pro](https://github.com/gba-mep/gantt-chart-pro) · [electrical-test-report-generator](https://github.com/gba-mep/electrical-test-report-generator)
+- **CAD & drawings** — [electrical-panel-label-plates](https://github.com/gba-mep/electrical-panel-label-plates)
+- **Data & OCR** — [ocr-skill](https://github.com/gba-mep/ocr-skill) · [VBA-Macro-Reader-v2.0.0](https://github.com/gba-mep/VBA-Macro-Reader-v2.0.0)
+- **Compliance & AI ops** — [confined-space-planner](https://github.com/gba-mep/confined-space-planner) · [路由规则](https://github.com/gba-mep/路由规则) · [consulting-services](https://github.com/gba-mep/consulting-services)
