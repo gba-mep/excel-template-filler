@@ -9,24 +9,24 @@
 ```python
 def detect_template_type(template_path: str) -> str:
     """
-    檢測模板類型
+    检测模板类型
     
     Returns:
-        "zip" - 含圖片/打印設置/繪圖
-        "openpyxl" - 無圖片
+        "zip" - 含图片/打印设置/绘图
+        "openpyxl" - 无图片
     """
     import zipfile
     
     with zipfile.ZipFile(template_path) as zf:
         names = zf.namelist()
         
-        # 檢查是否包含圖片
+        # 检查是否包含图片
         has_images = any(name.startswith('xl/media/') for name in names)
         
-        # 檢查是否包含打印設置
+        # 检查是否包含打印设置
         has_printer = any('printerSettings' in name for name in names)
         
-        # 檢查是否包含 DrawingML
+        # 检查是否包含 DrawingML
         has_drawings = any('drawings' in name for name in names)
         
         return "zip" if (has_images or has_printer or has_drawings) else "openpyxl"
@@ -77,11 +77,11 @@ engine.save("输出.xlsx")
 
 ```
 模板.xlsx（ZIP）
-  → 讀取全部文件到內存
-  → 修改 worksheet XML（t="s" → inlineStr，保留 s 屬性）
+  → 读取全部文件到内存
+  → 修改 worksheet XML（t="s" → inlineStr，保留 s 属性）
   → 生成新的 sheet2~sheetN
   → 更新 workbook.xml / rels / Content_Types
-  → 直接寫入新 ZIP（保留所有原始資源）
+  → 直接写入新 ZIP（保留所有原始资源）
 ```
 
 **使用示例：**
@@ -89,14 +89,14 @@ engine.save("输出.xlsx")
 ```python
 from scripts.engines.zip_engine import ZIPEngine
 
-engine = ZIPEngine(template="報批表模板.xlsx")
-engine.load_data("材料審批總表.xlsx")
+engine = ZIPEngine(template="报批表模板.xlsx")
+engine.load_data("材料审批总表.xlsx")
 engine.fill_and_generate_sheets(
     start_row=2,
     end_row=11,
-    field_map={"{編號}": "編號", "{材料}": "材料"}
+    field_map={"{编号}": "编号", "{材料}": "材料"}
 )
-engine.save_all("./報批表")
+engine.save_all("./报批表")
 ```
 
 ---
