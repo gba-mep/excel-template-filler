@@ -1,13 +1,13 @@
 ---
 name: excel-template-filler
 description: >
-  Excel 模板填充與批量生成系統。支持雙引擎架構：openpyxl（無圖片模板）+
-  ZIP 引擎（完美保留圖片/打印設置）。
-  觸發詞：批量填充表單、模板填充、佔位符替換、Excel模板、BQ頁合併、
-  含圖片模板、批量生成、Excel批量處理。
+  Excel 模板填充与批量生成系统。支持双引擎架构：openpyxl（无图片模板）+
+  ZIP 引擎（完美保留图片/打印设置）。
+  触发词：批量填充表单、模板填充、占位符替换、Excel模板、BQ页合并、
+  含图片模板、批量生成、Excel批量处理。
 version: 2.1.0
 icon: 📊
-author: David-CB666
+author: gba-mep
 agent_created: true
 metadata:
   clawdbot:
@@ -16,13 +16,13 @@ metadata:
         - python
 ---
 
-# Excel 模板填充與批量生成 v2.1
+# Excel 模板填充与批量生成 v2.1
 
 > Python 3.10+ | openpyxl >= 3.1.0
 
-## 模塊索引
+## 模块索引
 
-執行前先讀取對應模塊文檔：
+执行前先读取对应模块文档：
 
-- API 用法詳解（Python + CLI） → `references/api-usage.md`
-- 目錄結構與模塊說明 → `references/structure.md`
+- API 用法详解（Python + CLI） → `references/api-usage.md`
+- 目录结构与模块说明 → `references/structure.md`
