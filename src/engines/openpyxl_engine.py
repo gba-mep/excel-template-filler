@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-openpyxl 引擎 - 使用 openpyxl 處理無圖片模板
+openpyxl 引擎 - 使用 openpyxl 处理无图片模板
 
-適用於：無圖片、無打印設置的簡單模板
+适用于：无图片、无打印设置的简单模板
 
-作者: David-CB666
+作者: gba-mep
 版本: v2.1
 日期: 2026-06-02
 """
@@ -22,7 +22,7 @@ try:
     from openpyxl import Workbook, load_workbook
     from openpyxl.worksheet.worksheet import Worksheet
 except ImportError:
-    print("[ERROR] 請安裝 openpyxl: pip install openpyxl")
+    print("[ERROR] 请安装 openpyxl: pip install openpyxl")
     sys.exit(1)
 
 from .base_engine import BaseEngine
@@ -32,9 +32,9 @@ class OpenPYXLEngine(BaseEngine):
     """
     openpyxl 引擎
     
-    適用於無圖片的簡單模板
-    優點：代碼簡潔、易於維護、純 Python
-    缺點：會丟失圖片和打印設置
+    适用于无图片的简单模板
+    优点：代码简洁、易于维护、纯 Python
+    缺点：会丢失图片和打印设置
     """
     
     def __init__(self):
@@ -42,18 +42,18 @@ class OpenPYXLEngine(BaseEngine):
         super().__init__()
         self.workbook: Optional[Workbook] = None
         self.worksheet: Optional[Worksheet] = None
-        self.placeholders: Dict[str, List[str]] = {}  # {字段名: [單元格地址列表]}
-        self.header_map: Dict[str, int] = {}  # {表頭名: 列號}
+        self.placeholders: Dict[str, List[str]] = {}  # {字段名: [单元格地址列表]}
+        self.header_map: Dict[str, int] = {}  # {表头名: 列号}
     
     def load_template(self, template_path: str) -> bool:
         """
-        載入模板文件
+        载入模板文件
         
         Args:
-            template_path: 模板 Excel 路徑
+            template_path: 模板 Excel 路径
         
         Returns:
-            是否成功載入
+            是否成功载入
         """
         try:
             self.template_path = template_path
@@ -61,26 +61,26 @@ class OpenPYXLEngine(BaseEngine):
             self.worksheet = self.workbook.active
             self.is_loaded = True
             
-            print(f"[OK] 已載入模板: {template_path}")
+            print(f"[OK] 已载入模板: {template_path}")
             return True
             
         except Exception as e:
-            print(f"[ERROR] 載入模板失敗: {e}")
+            print(f"[ERROR] 载入模板失败: {e}")
             return False
     
     def scan_placeholders(self) -> List[str]:
         """
-        掃描模板中的佔位符
+        扫描模板中的占位符
         
         Returns:
-            佔位符列表
+            占位符列表
         """
         if not self.worksheet:
-            raise RuntimeError("請先載入模板")
+            raise RuntimeError("请先载入模板")
         
         self.placeholders.clear()
         
-        # 正則表達式匹配 {{字段名}} 或 {字段名}
+        # 正则表达式匹配 {{字段名}} 或 {字段名}
         double_brace_pattern = re.compile(r'\{\{([^}]+)\}\}')
         single_brace_pattern = re.compile(r'\{([^}]+)\}')
         
@@ -89,19 +89,19 @@ class OpenPYXLEngine(BaseEngine):
                 if cell.value and isinstance(cell.value, str):
                     value = cell.value.strip()
                     
-                    # 優先匹配雙花括號
+                    # 优先匹配双花括号
                     match = double_brace_pattern.match(value)
                     if match:
                         placeholder_name = match.group(1).strip()
                     else:
-                        # 嘗試匹配單花括號
+                        # 尝试匹配单花括号
                         match = single_brace_pattern.match(value)
                         if match:
                             placeholder_name = match.group(1).strip()
                         else:
                             continue
                     
-                    # 記錄佔位符位置
+                    # 记录占位符位置
                     if placeholder_name not in self.placeholders:
                         self.placeholders[placeholder_name] = []
                     self.placeholders[placeholder_name].append(cell.coordinate)
@@ -110,15 +110,15 @@ class OpenPYXLEngine(BaseEngine):
     
     def scan_headers(self) -> Dict[str, int]:
         """
-        掃描數據源表頭（第一行）
+        扫描数据源表头（第一行）
         
         Returns:
-            {表頭名: 列號}
+            {表头名: 列号}
         """
         self.header_map.clear()
         
         if not self.worksheet:
-            raise RuntimeError("請先載入模板")
+            raise RuntimeError("请先载入模板")
         
         for col_idx, cell in enumerate(self.worksheet[1], start=1):
             if cell.value:
@@ -133,28 +133,28 @@ class OpenPYXLEngine(BaseEngine):
         field_map: Dict[str, str]
     ) -> Worksheet:
         """
-        填充單個模板
+        填充单个模板
         
         Args:
-            data: 數據字典
-            field_map: 字段映射 {佔位符: 字段名}
+            data: 数据字典
+            field_map: 字段映射 {占位符: 字段名}
         
         Returns:
-            填充後的工作表
+            填充后的工作表
         """
         if not self.worksheet:
-            raise RuntimeError("請先載入模板")
+            raise RuntimeError("请先载入模板")
         
-        # 替換佔位符
+        # 替换占位符
         for placeholder, field_name in field_map.items():
             if placeholder in self.placeholders:
                 cell_value = data.get(field_name, "")
                 
-                # 處理空值
+                # 处理空值
                 if cell_value is None or cell_value == "":
                     cell_value = ""
                 
-                # 替換所有出現的佔位符
+                # 替换所有出现的占位符
                 for addr in self.placeholders[placeholder]:
                     self.worksheet[addr].value = cell_value
         
@@ -167,30 +167,30 @@ class OpenPYXLEngine(BaseEngine):
         output_path: str
     ) -> str:
         """
-        批量填充並導出
+        批量填充并导出
         
         Args:
-            data_list: 數據列表
-            field_map: 字段映射 {佔位符: 字段名}
-            output_path: 輸出路徑
+            data_list: 数据列表
+            field_map: 字段映射 {占位符: 字段名}
+            output_path: 输出路径
         
         Returns:
-            輸出文件路徑
+            输出文件路径
         """
         if not self.workbook:
-            raise RuntimeError("請先載入模板")
+            raise RuntimeError("请先载入模板")
         
-        print(f"[INFO] 開始生成 {len(data_list)} 個 Sheet...")
+        print(f"[INFO] 开始生成 {len(data_list)} 个 Sheet...")
         
-        # 創建新工作簿
+        # 创建新工作簿
         merged_wb = Workbook()
-        merged_wb.remove(merged_wb.active)  # 刪除默認工作表
+        merged_wb.remove(merged_wb.active)  # 删除默认工作表
         
         for i, data in enumerate(data_list):
-            # 創建模板副本
+            # 创建模板副本
             new_ws = self.worksheet
             
-            # 填充數據
+            # 填充数据
             for placeholder, field_name in field_map.items():
                 if placeholder in self.placeholders:
                     cell_value = data.get(field_name, "")
@@ -201,18 +201,18 @@ class OpenPYXLEngine(BaseEngine):
                     for addr in self.placeholders[placeholder]:
                         new_ws[addr].value = cell_value
             
-            # 生成工作表名稱
+            # 生成工作表名称
             first_field = list(field_map.values())[0] if field_map else None
             sheet_name = str(data.get(first_field, f"Sheet{i + 1}"))[:31] if first_field else f"Sheet{i + 1}"
             
-            # 清理工作表名稱
+            # 清理工作表名称
             sheet_name = self._clean_sheet_name(sheet_name)
             
-            # 複製到合併工作簿
+            # 复制到合并工作簿
             new_ws.title = sheet_name
             copied_ws = merged_wb.create_sheet(title=sheet_name)
             
-            # 複製內容
+            # 复制内容
             for row in new_ws.iter_rows():
                 for cell in row:
                     new_cell = copied_ws[cell.coordinate]
@@ -223,11 +223,11 @@ class OpenPYXLEngine(BaseEngine):
                         new_cell.border = cell.border.copy()
                         new_cell.alignment = cell.alignment.copy()
             
-            # 複製列寬
+            # 复制列宽
             for col_idx, col_dim in new_ws.column_dimensions.items():
                 copied_ws.column_dimensions[col_idx].width = col_dim.width
             
-            # 複製行高
+            # 复制行高
             for row_idx, row_dim in new_ws.row_dimensions.items():
                 copied_ws.row_dimensions[row_idx].height = row_dim.height
         
@@ -241,14 +241,14 @@ class OpenPYXLEngine(BaseEngine):
         return output_path
     
     def _clean_sheet_name(self, name: str) -> str:
-        """清理工作表名稱（移除非法字符）"""
+        """清理工作表名称（移除非法字符）"""
         illegal = ['\\', '/', '*', '?', ':', '[', ']']
         for ch in illegal:
             name = name.replace(ch, '_')
         return name[:31] if len(name) > 31 else name
     
     def close(self):
-        """關閉工作簿"""
+        """关闭工作簿"""
         if self.workbook:
             self.workbook.close()
             self.workbook = None
