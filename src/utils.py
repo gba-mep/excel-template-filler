@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-工具函數庫
+工具函数库
 
-作者: David-CB666
+作者: gba-mep
 版本: v2.1
 日期: 2026-06-02
 """
@@ -17,13 +17,13 @@ from datetime import datetime
 
 def clean_sheet_name(name: str) -> str:
     """
-    清理工作表名稱（移除非法字符）
+    清理工作表名称（移除非法字符）
     
     Args:
-        name: 原始名稱
+        name: 原始名称
     
     Returns:
-        清理後的名稱
+        清理后的名称
     """
     illegal = ['\\', '/', '*', '?', ':', '[', ']']
     for ch in illegal:
@@ -36,10 +36,10 @@ def clean_filename(name: str) -> str:
     清理文件名（移除非法字符）
     
     Args:
-        name: 原始名稱
+        name: 原始名称
     
     Returns:
-        清理後的名稱
+        清理后的名称
     """
     illegal = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
     for ch in illegal:
@@ -49,14 +49,14 @@ def clean_filename(name: str) -> str:
 
 def get_relative_path(base_path: str, full_path: str) -> str:
     """
-    計算相對路徑
+    计算相对路径
     
     Args:
-        base_path: 基礎路徑
-        full_path: 完整路徑
+        base_path: 基础路径
+        full_path: 完整路径
     
     Returns:
-        相對路徑
+        相对路径
     """
     base = Path(base_path).resolve()
     full = Path(full_path).resolve()
@@ -70,10 +70,10 @@ def get_relative_path(base_path: str, full_path: str) -> str:
 
 def col_letter(col_num: int) -> str:
     """
-    列號轉字母（1 = A, 27 = AA）
+    列号转字母（1 = A, 27 = AA）
     
     Args:
-        col_num: 列號（1-based）
+        col_num: 列号（1-based）
     
     Returns:
         列字母
@@ -88,13 +88,13 @@ def col_letter(col_num: int) -> str:
 
 def col_number(col_letter: str) -> int:
     """
-    列字母轉號（A = 1, AA = 27）
+    列字母转号（A = 1, AA = 27）
     
     Args:
         col_letter: 列字母
     
     Returns:
-        列號（1-based）
+        列号（1-based）
     """
     result = 0
     for ch in col_letter.upper():
@@ -108,15 +108,15 @@ def find_files_recursively(
     include_subfolders: bool = True
 ) -> List[Path]:
     """
-    遞歸查找文件
+    递归查找文件
     
     Args:
-        folder: 搜索文件夾
+        folder: 搜索文件夹
         pattern: 文件模式（如 "*.pdf"）
-        include_subfolders: 是否包含子文件夾
+        include_subfolders: 是否包含子文件夹
     
     Returns:
-        文件路徑列表
+        文件路径列表
     """
     folder_path = Path(folder)
     if not folder_path.exists():
@@ -130,13 +130,13 @@ def find_files_recursively(
 
 def get_latest_file(files: List[Path]) -> Optional[Path]:
     """
-    獲取最新修改的文件
+    获取最新修改的文件
     
     Args:
         files: 文件列表
     
     Returns:
-        最新文件路徑，空列表返回 None
+        最新文件路径，空列表返回 None
     """
     if not files:
         return None
@@ -155,21 +155,21 @@ def get_latest_file(files: List[Path]) -> Optional[Path]:
 
 class Logger:
     """
-    日誌記錄器
+    日志记录器
     
     使用示例：
         logger = Logger("./logs", "fill_log")
-        logger.log("開始處理")
+        logger.log("开始处理")
         logger.close()
     """
     
     def __init__(self, folder: str, prefix: str):
         """
-        初始化日誌記錄器
+        初始化日志记录器
         
         Args:
-            folder: 日誌文件夾
-            prefix: 日誌文件前綴
+            folder: 日志文件夹
+            prefix: 日志文件前缀
         """
         log_folder = Path(folder)
         log_folder.mkdir(parents=True, exist_ok=True)
@@ -178,32 +178,32 @@ class Logger:
         self.log_path = log_folder / f"{prefix}_{timestamp}.txt"
         self.log_file = open(self.log_path, 'w', encoding='utf-8')
         
-        self.log(f"開始時間: {datetime.now()}")
+        self.log(f"开始时间: {datetime.now()}")
     
     def log(self, message: str):
         """
-        寫入日誌
+        写入日志
         
         Args:
-            message: 日誌消息
+            message: 日志消息
         """
         if self.log_file:
             self.log_file.write(f"{message}\n")
             self.log_file.flush()
     
     def close(self):
-        """關閉日誌"""
+        """关闭日志"""
         if self.log_file:
-            self.log(f"結束時間: {datetime.now()}")
+            self.log(f"结束时间: {datetime.now()}")
             self.log_file.close()
             self.log_file = None
 
 
 def setup_chinese_font():
     """
-    設置中文字體（用於終端輸出）
+    设置中文字体（用于终端输出）
     
-    確保 Python 能正確輸出中文到 Windows 終端
+    确保 Python 能正确输出中文到 Windows 终端
     """
     import sys
     import io
