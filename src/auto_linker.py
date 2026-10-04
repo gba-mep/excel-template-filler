@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-自動鏈接器 - 根據單元格內容自動匹配文件並創建超鏈接
+自动链接器 - 根据单元格内容自动匹配文件并创建超链接
 
-作者: David-CB666
+作者: gba-mep
 版本: v2.1
 日期: 2026-06-02
 """
@@ -20,23 +20,23 @@ try:
     from openpyxl import load_workbook
     from openpyxl.styles import Font
 except ImportError:
-    print("[ERROR] 請安裝 openpyxl: pip install openpyxl")
+    print("[ERROR] 请安装 openpyxl: pip install openpyxl")
     sys.exit(1)
 
 
 class AutoLinker:
     """
-    自動鏈接器
+    自动链接器
     
     功能：
-    1. 根據單元格內容搜索文件
-    2. 創建超鏈接
+    1. 根据单元格内容搜索文件
+    2. 创建超链接
     3. 支持通配符匹配
     
     使用示例：
         linker = AutoLinker("summary.xlsx", 1, "./files")
         result = linker.convert_to_hyperlinks()
-        print(f"成功: {result['success']}, 跳過: {result['skipped']}")
+        print(f"成功: {result['success']}, 跳过: {result['skipped']}")
     """
     
     def __init__(
@@ -46,29 +46,29 @@ class AutoLinker:
         search_root: str = "."
     ):
         """
-        初始化自動鏈接器
+        初始化自动链接器
         
         Args:
-            workbook: 工作簿路徑
-            target_column: 目標列（1 = A 列）
-            search_root: 搜索根目錄
+            workbook: 工作簿路径
+            target_column: 目标列（1 = A 列）
+            search_root: 搜索根目录
         """
         self.workbook_path = Path(workbook)
         self.target_column = target_column
         self.search_root = Path(search_root)
         
-        # 驗證
+        # 验证
         if not self.workbook_path.exists():
             raise FileNotFoundError(f"工作簿不存在: {workbook}")
         if not self.search_root.exists():
-            raise FileNotFoundError(f"搜索目錄不存在: {search_root}")
+            raise FileNotFoundError(f"搜索目录不存在: {search_root}")
         
-        # 載入工作簿
+        # 载入工作簿
         self.wb = load_workbook(self.workbook_path)
         self.ws = self.wb.active
         
         # 文件索引
-        self.file_index: Dict[str, Path] = {}  # {文件名（不含擴展名）: 完整路徑}
+        self.file_index: Dict[str, Path] = {}  # {文件名（不含扩展名）: 完整路径}
         
     def build_file_index(
         self,
@@ -76,11 +76,11 @@ class AutoLinker:
         include_subfolders: bool = True
     ):
         """
-        構建文件索引
+        构建文件索引
         
         Args:
-            extensions: 擴展名列表（如 [".pdf", ".docx"]）
-            include_subfolders: 是否包含子文件夾
+            extensions: 扩展名列表（如 [".pdf", ".docx"]）
+            include_subfolders: 是否包含子文件夹
         """
         self.file_index.clear()
         
@@ -100,11 +100,11 @@ class AutoLinker:
                     if file_path.suffix.lower() not in extensions:
                         continue
                 
-                # 索引鍵：文件名（不含擴展名）
+                # 索引键：文件名（不含扩展名）
                 key = file_path.stem.lower()
                 self.file_index[key] = file_path
         
-        print(f"[OK] 已索引 {len(self.file_index)} 個文件")
+        print(f"[OK] 已索引 {len(self.file_index)} 个文件")
     
     def find_file(
         self,
@@ -115,18 +115,18 @@ class AutoLinker:
         查找匹配的文件
         
         Args:
-            cell_value: 單元格值
+            cell_value: 单元格值
             use_wildcard: 是否使用通配符匹配
         
         Returns:
-            匹配的文件路徑，未找到返回 None
+            匹配的文件路径，未找到返回 None
         """
         if not cell_value:
             return None
         
         cell_value_lower = cell_value.lower().strip()
         
-        # 1. 精確匹配
+        # 1. 精确匹配
         if cell_value_lower in self.file_index:
             return self.file_index[cell_value_lower]
         
@@ -146,24 +146,24 @@ class AutoLinker:
         start_row: int = 2
     ) -> Dict[str, int]:
         """
-        轉換單元格為超鏈接
+        转换单元格为超链接
         
         Args:
-            extensions: 文件擴展名列表
-            include_subfolders: 是否包含子文件夾
+            extensions: 文件扩展名列表
+            include_subfolders: 是否包含子文件夹
             use_wildcard: 是否使用通配符匹配
-            start_row: 開始行（默認 2，跳過表頭）
+            start_row: 开始行（默认 2，跳过表头）
         
         Returns:
-            {"success": 成功數, "skipped": 跳過數}
+            {"success": 成功数, "skipped": 跳过数}
         """
-        # 構建文件索引
+        # 构建文件索引
         self.build_file_index(extensions, include_subfolders)
         
         success_count = 0
         skipped_count = 0
         
-        # 遍歷目標列
+        # 遍历目标列
         for row_idx in range(start_row, self.ws.max_row + 1):
             cell = self.ws.cell(row=row_idx, column=self.target_column)
             cell_value = str(cell.value).strip() if cell.value else ""
@@ -176,21 +176,21 @@ class AutoLinker:
             matched_file = self.find_file(cell_value, use_wildcard)
             
             if matched_file:
-                # 計算相對路徑
+                # 计算相对路径
                 try:
                     rel_path = matched_file.relative_to(self.workbook_path.parent)
                     hyperlink_path = f"./{rel_path}"
                 except ValueError:
                     hyperlink_path = str(matched_file)
                 
-                # 清空單元格
+                # 清空单元格
                 cell.value = None
                 
-                # 創建超鏈接
+                # 创建超链接
                 cell.hyperlink = hyperlink_path
-                cell.value = cell_value  # 顯示文本
+                cell.value = cell_value  # 显示文本
                 
-                # 設置樣式
+                # 设置样式
                 cell.font = Font(color="0000FF", underline="single")
                 
                 success_count += 1
@@ -206,7 +206,7 @@ class AutoLinker:
         return {"success": success_count, "skipped": skipped_count}
     
     def close(self):
-        """關閉工作簿"""
+        """关闭工作簿"""
         self.wb.close()
 
 
@@ -214,13 +214,13 @@ def main():
     """命令行入口"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="自動鏈接器")
-    parser.add_argument("--workbook", required=True, help="工作簿路徑")
-    parser.add_argument("--column", type=int, default=1, help="目標列（默認 1）")
-    parser.add_argument("--root", default=".", help="搜索根目錄")
-    parser.add_argument("--ext", default=".pdf,.docx,.xlsx", help="擴展名（逗號分隔）")
-    parser.add_argument("--no-subfolders", action="store_true", help="不包含子文件夾")
-    parser.add_argument("--exact", action="store_true", help="精確匹配（不用通配符）")
+    parser = argparse.ArgumentParser(description="自动链接器")
+    parser.add_argument("--workbook", required=True, help="工作簿路径")
+    parser.add_argument("--column", type=int, default=1, help="目标列（默认 1）")
+    parser.add_argument("--root", default=".", help="搜索根目录")
+    parser.add_argument("--ext", default=".pdf,.docx,.xlsx", help="扩展名（逗号分隔）")
+    parser.add_argument("--no-subfolders", action="store_true", help="不包含子文件夹")
+    parser.add_argument("--exact", action="store_true", help="精确匹配（不用通配符）")
     
     args = parser.parse_args()
     
@@ -238,7 +238,7 @@ def main():
         use_wildcard=not args.exact
     )
     
-    print(f"\n結果: 成功 {result['success']}, 跳過 {result['skipped']}")
+    print(f"\n结果: 成功 {result['success']}, 跳过 {result['skipped']}")
     
     linker.close()
 
