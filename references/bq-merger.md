@@ -26,7 +26,7 @@ merger = BQMerger()
 ### Step 2: 载入 BQ PDF
 
 ```python
-merger.load_bq_pdf("BQ標書.pdf")
+merger.load_bq_pdf("BQ标书.pdf")
 ```
 
 **要求：**
@@ -37,11 +37,11 @@ merger.load_bq_pdf("BQ標書.pdf")
 
 ```python
 merger.load_zongbiao(
-    zongbiao_path="材料審批總表.xlsx",
+    zongbiao_path="材料审批总表.xlsx",
     sheet_index=0,
     start_row=7,
-    col_bq=1,    # A 列：BQ 編號
-    col_el=2,    # B 列：EL 編號
+    col_bq=1,    # A 列：BQ 编号
+    col_el=2,    # B 列：EL 编号
     col_name=3   # C 列：材料名
 )
 ```
@@ -71,12 +71,12 @@ print(f"匹配失败: {len(failed)} 个")
 ### Step 5: 合并 PDF
 
 ```python
-merger.merge_pdfs("./報批表PDF", "./最終輸出")
+merger.merge_pdfs("./报批表PDF", "./最终输出")
 ```
 
 **输入目录结构：**
 ```
-./報批表PDF/
+./报批表PDF/
 ├── EL-001.pdf
 ├── EL-002.pdf
 ├── EL-003.pdf
@@ -105,16 +105,16 @@ from scripts.exporters.bq_merger import BQMerger
 merger = BQMerger()
 
 # 载入 BQ PDF
-merger.load_bq_pdf("BQ標書.pdf")
+merger.load_bq_pdf("BQ标书.pdf")
 
 # 载入总表
-merger.load_zongbiao("材料審批總表.xlsx")
+merger.load_zongbiao("材料审批总表.xlsx")
 
 # 匹配 BQ 页码
 success, failed = merger.match_bq_pages()
 
 # 合并 PDF
-merger.merge_pdfs("./報批表PDF", "./最終輸出")
+merger.merge_pdfs("./报批表PDF", "./最终输出")
 
 # 关闭
 merger.close()
