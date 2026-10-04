@@ -3,7 +3,7 @@
 """
 示例：批量生成 PDF
 
-展示如何批量填充模板並導出為 PDF 文件
+展示如何批量填充模板并导出为 PDF 文件
 """
 
 import sys
@@ -23,9 +23,9 @@ def main():
     template = str(Path(__file__).parent / "templates" / "sample_template.xlsx")
     output_dir = str(Path(__file__).parent / "output" / "filled_forms")
     
-    # 檢查文件
+    # 检查文件
     if not Path(data_source).exists():
-        print(f"[ERROR] 數據源不存在: {data_source}")
+        print(f"[ERROR] 数据源不存在: {data_source}")
         return
     
     if not Path(template).exists():
@@ -35,18 +35,18 @@ def main():
     # 初始化
     filler = TemplateFiller(data_source, template)
     
-    # 掃描佔位符
+    # 扫描占位符
     placeholders = filler.scan_placeholders()
-    print(f"發現佔位符: {placeholders}")
+    print(f"发现占位符: {placeholders}")
     
-    # 驗證數據
+    # 验证数据
     validation = filler.validate_data()
     if not validation['valid']:
-        print(f"[WARNING] 數據驗證失敗: {validation['missing_fields']}")
-        print("[INFO] 將繼續處理，但部分佔位符可能無法替換")
+        print(f"[WARNING] 数据验证失败: {validation['missing_fields']}")
+        print("[INFO] 将继续处理，但部分占位符可能无法替换")
     
-    # 批量導出 PDF
-    print(f"\n=== 批量導出 PDF ===")
+    # 批量导出 PDF
+    print(f"\n=== 批量导出 PDF ===")
     
     try:
         output_files = filler.fill_and_export(
@@ -55,19 +55,19 @@ def main():
             export_format="pdf",
             output_dir=output_dir,
             empty_handling="clear",
-            naming_mode="auto"  # 使用 A 列值作為文件名
+            naming_mode="auto"  # 使用 A 列值作为文件名
         )
         
-        print(f"\n已生成 {len(output_files)} 個 PDF 文件:")
+        print(f"\n已生成 {len(output_files)} 个 PDF 文件:")
         for file_path in output_files:
             print(f"  - {file_path}")
         
     except Exception as e:
-        print(f"[ERROR] 導出失敗: {e}")
-        print("[INFO] PDF 導出需要安裝 pywin32 和 Microsoft Excel")
+        print(f"[ERROR] 导出失败: {e}")
+        print("[INFO] PDF 导出需要安装 pywin32 和 Microsoft Excel")
         print("[INFO] 或使用 export_format='excel'")
     
-    # 關閉
+    # 关闭
     filler.close()
 
 
