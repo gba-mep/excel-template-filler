@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-示例：自動鏈接文件
+示例：自动链接文件
 
-展示如何根據單元格內容自動匹配文件並創建超鏈接
+展示如何根据单元格内容自动匹配文件并创建超链接
 """
 
 import sys
@@ -16,19 +16,19 @@ from auto_linker import AutoLinker
 
 
 def main():
-    """自動鏈接示例"""
+    """自动链接示例"""
     
-    # 示例文件路徑（相對於 examples/ 目錄）
+    # 示例文件路径（相对于 examples/ 目录）
     workbook = str(Path(__file__).parent / "data" / "sample_list.xlsx")
     search_root = str(Path(__file__).parent / "files")
     
-    # 檢查文件
+    # 检查文件
     if not Path(workbook).exists():
         print(f"[ERROR] 工作簿不存在: {workbook}")
         return
     
     if not Path(search_root).exists():
-        print(f"[ERROR] 搜索目錄不存在: {search_root}")
+        print(f"[ERROR] 搜索目录不存在: {search_root}")
         return
     
     # 初始化
@@ -38,24 +38,24 @@ def main():
         search_root=search_root
     )
     
-    # 執行自動鏈接
-    print("=== 自動鏈接文件 ===")
+    # 执行自动链接
+    print("=== 自动链接文件 ===")
     print(f"工作簿: {workbook}")
-    print(f"搜索目錄: {search_root}")
-    print(f"目標列: A 列")
+    print(f"搜索目录: {search_root}")
+    print(f"目标列: A 列")
     print()
     
     result = linker.convert_to_hyperlinks(
-        extensions=[".pdf", ".docx", ".xlsx"],  # 支持的擴展名
-        include_subfolders=True,  # 包含子文件夾
+        extensions=[".pdf", ".docx", ".xlsx"],  # 支持的扩展名
+        include_subfolders=True,  # 包含子文件夹
         use_wildcard=True  # 使用通配符匹配
     )
     
-    print(f"\n=== 結果 ===")
+    print(f"\n=== 结果 ===")
     print(f"成功: {result['success']}")
-    print(f"跳過: {result['skipped']}")
+    print(f"跳过: {result['skipped']}")
     
-    # 關閉
+    # 关闭
     linker.close()
     print("\n[OK] 完成")
 
